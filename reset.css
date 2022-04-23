@@ -18,20 +18,25 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
+
 ol, ul {
 	list-style: none;
 }
+
 blockquote, q {
 	quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
 	content: '';
@@ -57,8 +62,7 @@ img {
 	overflow: hidden;
 }
 
-button{
-
+button {
 	background: inherit; 
 	border: none; 
 	-webkit-box-shadow: none; 
@@ -67,4 +71,10 @@ button{
 	padding: 0; 
 	overflow: visible; 
 	cursor: pointer;
+}
+
+input {
+	-webkit-appearance: none;
+		 -moz-appearance: none;
+					appearance: none;
 }

@@ -50,20 +50,30 @@
         </button>
       </article>
 
-      <div class="balance">
-        <input type="number" value="balance" disabled>
+      <article class="balance">
+        <div class="text-balance">
+          잔액 :
+          <span class="unit">원</span>
+        </div>
         <button type="button">거스름돈 반환</button>
-      </div>
-      <div class="deposit">
+      </article>
+
+      <article class="deposit">
         <input type="number" value="deposit" placeholder="입금액 입력">
         <button type="button">입금</button>
-      </div>
+      </article>
 
       <article class="selected-products1">
         <div class="selected-list">
           <ul>
-            <li>Original_Cola</li>
-            <li>Green_Cola</li>
+            <li><img src="/images/Original_Cola.png" alt="오리지널 콜라">
+                Original_Cola
+                <span>1</span>
+            </li>
+            <li><img src="/images/Green_Cola.png" alt="그린 콜라">
+                Green_Cola
+                <span>2</span>
+            </li>
           </ul>
         </div>
         <button type="button" value="select">획득</button>
@@ -73,7 +83,7 @@
     <section class="right">
       <h2 class="hidden">소지금과 선택한 음료를 확인해주세요.</h2>
       <div class="money">
-        <input type="number" value="money" disabled>
+        <input type="number" value="money" name="" disabled>
       </div>
       <article class="selected-products2">
         <h3>획득한 음료</h3>
