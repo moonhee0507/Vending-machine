@@ -59,6 +59,7 @@ main {
 .products {
   text-align: center;
   position: relative;
+  margin-top: 31px;
 }
 
 .products > button {
@@ -129,6 +130,7 @@ main {
 
 .text-balance {
   display: inline-block;
+  width: 200px;
   max-width: 200px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -219,6 +221,7 @@ input[type="number"]::placeholder {
 
 .selected-list {
   display: inline-block;
+  width: 200px;
   max-width: 200px;
   height: 106px;
   background-color: #EAE8FE;;
@@ -280,8 +283,8 @@ input[type="number"]::placeholder {
   border-radius: 5px;
 }
 
-.selected-list > ul :nth-child(1) {
-  
+.selected-products1 {
+  margin-bottom: -31px;
 }
 
 .selected-products1 > button {
@@ -346,6 +349,7 @@ h3 {
 .right .selected-list {
   display: inline-block;
   width: 306px;
+  max-width: 306px;
   height: 364px;
   background-color: #EAE8FE;;
   overflow: scroll;
@@ -426,6 +430,7 @@ h3 {
 
   header img {
     width: 166px;
+    margin-bottom: 0;
   }
 	
   main {
