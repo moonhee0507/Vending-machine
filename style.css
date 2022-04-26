@@ -107,13 +107,14 @@ main {
 
 .sold-out {
   pointer-events: none;
+  position: relative;
 }
 
 .sold-out::after {
   content: '';
   position: absolute;
   top: 0px;
-  left: 133px;
+  left: 0px;
   background: url(./images/품절_표시.png);
   background-repeat: no-repeat;
   width: 94px;
@@ -423,7 +424,7 @@ h3 {
 }
 
 /* 모바일 */
-@media (max-width: 360px) {
+@media (max-width: 414px) {
 	body {
     background-color: #ffffff;
   }
@@ -448,13 +449,20 @@ h3 {
     grid-row: 1/2;
     background-color: #ffffff;
     padding-top: 28px;
+    justify-items: center;
+  }
+
+  /* 포지션으로 인해 negative margin 적용 */
+  .selected-list {
+    margin-left: -7px;
   }
   
   .right {
     display: grid;
     grid-column: 1/2;
     grid-row: 2/3;
-    /* grid-template-columns: 360px; */
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
-
 }
