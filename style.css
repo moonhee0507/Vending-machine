@@ -403,7 +403,9 @@ h3 {
   border-radius: 5px;
 }
 
-.right .selected-list { overflow: overlay; }
+.right .selected-list { 
+  overflow: auto; 
+}
 
 .right .selected-list::-webkit-scrollbar {
   width: 4px;
