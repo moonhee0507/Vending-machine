@@ -239,7 +239,11 @@ input[type="number"]::placeholder {
   top: -8px;
 }
 
-.selected-list { overflow: overlay; }
+/* overflow의 overlay값은 Webkit(Safari 등)과 Blink(Chrome 또는 Opera 등) 기반 브라우저만 지원한다. */
+/* overlay는 auto와 동일하게 동작하지만, 스크롤바가 공간을 차지하는 대신 콘텐츠 위에 위치한다. */
+.selected-list { 
+  overflow: auto; 
+}
 
 .selected-list::-webkit-scrollbar {
   width: 4px;
