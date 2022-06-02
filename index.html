@@ -19,32 +19,32 @@
       <h2 class="hidden">음료를 골라주세요.</h2>
       <article class="products">
         <h3 class="hidden">음료 목록입니다.</h3>
-        <button type="button" value="Original_Cola">
+        <button type="button" value="Original_Cola" class="button-product">
           <img src="images/Original_Cola.png" alt="오리지널 콜라">
           Original_Cola
           <span>1000원</span>
         </button>
-        <button type="button" value="Violet_Cola" class="sold-out">
+        <button type="button" value="Violet_Cola" class="button-product sold-out">
           <img src="images/Violet_Cola.png" alt="바이올렛 콜라">
           Violet_Cola
           <span>1000원</span>
         </button>
-        <button type="button" value="Yellow_Cola">
+        <button type="button" value="Yellow_Cola" class="button-product">
           <img src="images/Yellow_Cola.png" alt="옐로우 콜라">
           Yellow_Cola
           <span>1000원</span>
         </button>
-        <button type="button" value="">
+        <button type="button" value="Cool_Cola" class="button-product">
           <img src="images/Cool_Cola.png" alt="쿨 콜라">
           Cool_Cola
           <span>1000원</span>
         </button>
-        <button type="button" value="Cool_Cola">
+        <button type="button" value="Green_Cola" class="button-product">
           <img src="images/Green_Cola.png" alt="그린 콜라">
           Green_Cola
           <span>1000원</span>
         </button>
-        <button type="button" value="Orange_Cola">
+        <button type="button" value="Orange_Cola" class="button-product">
           <img src="images/Orange_Cola.png" alt="오렌지 콜라">
           Orange_Cola
           <span>1000원</span>
@@ -55,29 +55,29 @@
         <h3 class="hidden">잔액을 확인할 수 있습니다.</h3>
         <div class="text-balance">
           잔액 : 
-          <span class="unit" id="balance-unit"></span>
+          <span class="unit" id="content-balance"></span>
         </div>
-        <button type="button">거스름돈 반환</button>
+        <button type="button" id="button-return">거스름돈 반환</button>
       </article>
 
       <article class="deposit">
         <h3 class="hidden">필요한 금액을 입금할 수 있습니다.</h3>
-        <input id="inputDeposit" type="number" value="" placeholder="입금액 입력">
-        <button id="buttonDeposit" type="button">입금</button>
+        <input id="input-deposit" type="number" value="" placeholder="입금액 입력">
+        <button id="button-deposit" type="button">입금</button>
       </article>
 
       <article class="selected-products1">
         <h3 class="hidden">선택한 음료를 확인할 수 있습니다.</h3>
-        <div class="selected-list">
-          <ul>
-            <li><img src="images/Original_Cola.png" alt="오리지널 콜라">
+        <div class="selected-list" id="basket-select">
+          <ul id="ul-select">
+            <!-- <li><img src="images/Original_Cola.png" alt="오리지널 콜라">
                 Original_Cola
                 <span>1</span>
             </li>
             <li><img src="images/Green_Cola.png" alt="그린 콜라">
                 Green_Cola
                 <span>2</span>
-            </li>
+            </li> -->
           </ul>
         </div>
         <button type="button" value="select">획득</button>
@@ -85,11 +85,11 @@
     </section>
 
     <section class="right">
-      <h2 class="hidden">소지금과 선택한 음료를 확인해주세요.</h2>
-      <article class="money-you-have">
-        <h3 class="hidden">소지금을 확인할 수 있습니다.</h3>
+      <h2 class="hidden">구매금액과 선택한 음료를 확인해주세요.</h2>
+      <article class="total">
+        <h3 class="hidden">구매금액을 확인할 수 있습니다.</h3>
         <div class="money">
-          소지금 :
+          총 구매액 :
           <span class="unit">원</span>
         </div>
       </article>
@@ -97,7 +97,7 @@
         <h3>획득한 음료</h3>
         <div class="selected-list">
           <ul>
-            <li><img src="images/Original_Cola.png" alt="오리지널 콜라">
+            <!-- <li><img src="images/Original_Cola.png" alt="오리지널 콜라">
                 Original_Cola
                 <span>1</span>
             </li>
@@ -112,10 +112,9 @@
             <li><img src="images/Violet_Cola.png" alt="바이올렛 콜라">
                 Violet_Cola
                 <span>5</span>
-            </li>
+            </li> -->
           </ul>
         </div>
-        <strong class="total">총금액 : 9,000원</strong>
       </article>
     </section>
   </main>
