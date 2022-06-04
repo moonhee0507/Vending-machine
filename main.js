@@ -15,8 +15,8 @@ const buttonProduct = document.querySelectorAll('.button-product'); // 상품버
 const basketSelect = document.querySelector('#basket-select'); // 바구니1
 const ulSelect = document.querySelector('#ul-select'); // 바구니1의 ul
 
-
 let preBalance = 0;
+balance.innerHTML = 0 + '원';
 
 buttonDeposit.addEventListener('click', function() {
     
@@ -25,26 +25,26 @@ buttonDeposit.addEventListener('click', function() {
     } else {
         balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
         preBalance += parseInt(inputDeposit.value)
-    
+        
         // 입금액 입력칸은 비어진다.
         inputDeposit.value = '';
     }
-
+    
 });
-
 
 // 거스름돈 반환 버튼을 클릭하면
 buttonReturn.addEventListener('click', function() {
-
+    
     // 확인창이 뜬다.
     if (confirm('거스름돈을 받으시겠습니까?')) {
         alert(`반환되었습니다.`);
-        balance.innerHTML = '';
+        balance.innerHTML = 0 + '원';
+        inputDeposit.value = '';
         // TODO: 두 장바구니에서 상품이 모두 사라진다.
         
     }
-    
 });
+
 
 // 상품버튼을 클릭하면 
 for(let i = 0; i < buttonProduct.length; i++) {
@@ -53,14 +53,37 @@ for(let i = 0; i < buttonProduct.length; i++) {
         // ul 아래 li 생성 및 li 아래 img, span 생성
         const basketedProduct = document.createElement('li');
         ulSelect.appendChild(basketedProduct);
-    
-        const imgProduct = document.createElement('img');
-        const basketedCount = document.createElement('span');
-        basketedProduct.appendChild(imgProduct);
-        basketedProduct.appendChild(basketedCount);
-    
-        // 이미 안에 있으면 숫자가 +1된다.
-    
+        
+        // 장바구니 img 생성 및 붙이기
+        // const imgProduct = document.createElement('img');
+        // basketedProduct.appendChild(imgProduct);
+        
+        // 장바구니 span 생성 및 붙이기
+        // const basketedCount = document.createElement('span');
+        // basketedProduct.appendChild(basketedCount);
+
+        basketedProduct.classList.add('listProductInfo');
+        
+        
+        // TODO: 이미 안에 있으면 숫자가 +1된다.
+        if (buttonCount > 1) {
+            let buttonCount = 0;
+            // 버튼 카운트가 올라간다.
+            buttonCount++;
+            
+            basketedProduct.innerHTML = `
+                <img src="./images/Original_Cola.png" alt="오리지널 콜라">
+                Original_Cola
+                <span>${buttonCount}</span>
+            `;
+
+        } else {
+            basketedProduct.innerHTML = `
+                <img src="./images/Original_Cola.png" alt="오리지널 콜라">
+                Original_Cola
+                <span>1</span>
+            `;
+        }
     });
 }
 

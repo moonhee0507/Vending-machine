@@ -254,6 +254,7 @@ input[type="number"]::placeholder {
     border-radius: 50px;
 }
 
+/* 새로 생성됨 */
 .selected-list > ul > li {
   width: 150px;
   background: #FFFFFF;
@@ -268,11 +269,13 @@ input[type="number"]::placeholder {
   padding: 6px 10px 7px 10px;
 }
 
+/* 새로 생성됨 */
 .selected-list > ul > li > img {
   width: 18px;
   margin-right: 10px;
 }
 
+/* 새로 생성됨 */
 .selected-list > ul > li > span {
   float: right;
   padding: 4px 11px 6px;
