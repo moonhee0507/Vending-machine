@@ -45,47 +45,41 @@ buttonReturn.addEventListener('click', function() {
     }
 });
 
+// 상품버튼 클릭 시 이벤트
+// i번째 버튼을 클릭하면, i번째 버튼에 맞는 리스트가 생긴다.
+const arrProducts = ['오리지널 콜라', '바이올렛 콜라', '옐로우 콜라', '쿨 콜라', '그린 콜라', '오렌지 콜라'];
 
-// 상품버튼을 클릭하면 
-for(let i = 0; i < buttonProduct.length; i++) {
-    buttonProduct[i].addEventListener('click', function() {
-    
-        // ul 아래 li 생성 및 li 아래 img, span 생성
-        const basketedProduct = document.createElement('li');
-        ulSelect.appendChild(basketedProduct);
-        
-        // 장바구니 img 생성 및 붙이기
-        // const imgProduct = document.createElement('img');
-        // basketedProduct.appendChild(imgProduct);
-        
-        // 장바구니 span 생성 및 붙이기
-        // const basketedCount = document.createElement('span');
-        // basketedProduct.appendChild(basketedCount);
+const arrProductsEn = ['Original_Cola', 'Violet_Cola', 'Yellow_Cola', 'Cool_Cola', 'Green_Cola', 'Orange_Cola'];
 
-        basketedProduct.classList.add('listProductInfo');
+function makeList(i) {
+    let buttonCount = 0;
+    document.querySelectorAll('.button-product')[i].addEventListener('click', function() {
+        buttonCount += 1;
         
-        
-        // TODO: 이미 안에 있으면 숫자가 +1된다.
-        if (buttonCount > 1) {
-            let buttonCount = 0;
-            // 버튼 카운트가 올라간다.
-            buttonCount++;
-            
+        if (buttonCount == 1) {
+            const basketedProduct = document.createElement('li');
+            ulSelect.appendChild(basketedProduct);
+
             basketedProduct.innerHTML = `
-                <img src="./images/Original_Cola.png" alt="오리지널 콜라">
-                Original_Cola
-                <span>${buttonCount}</span>
+                <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}">
+                ${arrProductsEn[i]}
+                <span class="quantity-line${i}">${buttonCount}</span>
             `;
-
         } else {
-            basketedProduct.innerHTML = `
-                <img src="./images/Original_Cola.png" alt="오리지널 콜라">
-                Original_Cola
-                <span>1</span>
-            `;
+            document.querySelector(`.quantity-line${i}`).innerHTML = `${buttonCount}`;
         }
     });
 }
+
+const 오리지널콜라 = new makeList(0);
+const 바이올렛콜라 = new makeList(1);
+const 옐로우콜라 = new makeList(2);
+const 쿨콜라 = new makeList(3);
+const 그린콜라 = new makeList(4);
+const 오렌지콜라 = new makeList(5);
+
+
+
 
 // 획득버튼을 누르면 .right에 있는 .selected-list 안으로 들어간다
     // 돈이 그 이상 있어야 버튼이 작동한다.
