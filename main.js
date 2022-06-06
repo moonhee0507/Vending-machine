@@ -14,6 +14,8 @@ const buttonReturn = document.querySelector('#button-return'); // 반환버튼
 const buttonProduct = document.querySelectorAll('.button-product'); // 상품버튼
 const basketSelect = document.querySelector('#basket-select'); // 바구니1
 const ulSelect = document.querySelector('#ul-select'); // 바구니1의 ul
+const buttonBuy = document.querySelector('#buy'); // 획득버튼
+const ulBuy = document.querySelector('#ul-buy'); // 바구니2의 ul
 
 let preBalance = 0;
 balance.innerHTML = 0 + '원';
@@ -61,12 +63,12 @@ function makeList(i) {
             ulSelect.appendChild(basketedProduct);
 
             basketedProduct.innerHTML = `
-                <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}">
+                <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
                 ${arrProductsEn[i]}
-                <span class="quantity-line${i}">${buttonCount}</span>
+                <span class="quantity-line${i+1}">${buttonCount}</span>
             `;
         } else {
-            document.querySelector(`.quantity-line${i}`).innerHTML = `${buttonCount}`;
+            document.querySelector(`.quantity-line${i+1}`).innerHTML = `${buttonCount}`;
         }
     });
 }
@@ -78,9 +80,38 @@ const 쿨콜라 = new makeList(3);
 const 그린콜라 = new makeList(4);
 const 오렌지콜라 = new makeList(5);
 
+// 획득버튼 이벤트
+buttonBuy.addEventListener('click', function() {
+    for (let i = 0; i < ulSelect.children.length; i++) {
+        const boughtProduct = document.createElement('li');
+        ulBuy.appendChild(boughtProduct);
 
+        const boughtProductImg = document.createElement('img')
+        boughtProduct.appendChild(boughtProductImg);
+        boughtProductImg.src = ulSelect.children[i].children[0].src;
+        boughtProductImg.alt = ulSelect.children[i].children[0].alt;
 
+        const boughtProductText = document.createTextNode(ulSelect.children[i].innerText.slice(0, -1))
+        boughtProduct.appendChild(boughtProductText);
+        
+        const boughtProductSpan = document.createElement('span')
+        boughtProduct.appendChild(boughtProductSpan);
+        boughtProductSpan.classList.add('buy-quantity');
+        boughtProductSpan.innerHTML = ulSelect.children[i].children[1].innerHTML;
 
-// 획득버튼을 누르면 .right에 있는 .selected-list 안으로 들어간다
+        let buy = document.querySelector('#content-buy');
+        let preBuy = 0;
+        buy.innerHTML = 0 + '원';
+
+        for (let j = 0; j < ulBuy.children.length; j++) {
+            buy.innerHTML = preBuy + parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000 + '원';
+            preBuy += parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000;
+        }
+    }
+    // 장바구니 비우기
+    ulSelect.innerHTML = '';
+
+    // 총구매액 계산
+});
     // 돈이 그 이상 있어야 버튼이 작동한다.
     // 돈이 그 이상 없으면 입금 알림이 뜬다.
