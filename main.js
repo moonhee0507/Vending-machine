@@ -65,10 +65,10 @@ function makeList(i) {
             basketedProduct.innerHTML = `
                 <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
                 ${arrProductsEn[i]}
-                <span class="quantity-line${i+1}">${buttonCount}</span>
+                <span class="quantity">${buttonCount}</span>
             `;
         } else {
-            document.querySelector(`.quantity-line${i+1}`).innerHTML = `${buttonCount}`;
+            document.querySelector('.quantity').innerHTML = `${buttonCount}`;
         }
     });
 }
@@ -79,6 +79,17 @@ const 옐로우콜라 = new makeList(2);
 const 쿨콜라 = new makeList(3);
 const 그린콜라 = new makeList(4);
 const 오렌지콜라 = new makeList(5);
+
+
+// 장바구니에 담긴 상품가격 합계확인
+// 반복하고 basketedPrice와 잔액을 비교하는 함수...불리언...
+let preSelect = 0;
+for (let i = 0; i < ulSelect.children.length; i++) {
+    let basketedPrice = preSelect + parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
+    preSelect += parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
+    console.log(basketedPrice);
+}
+
 
 // 획득버튼 이벤트
 buttonBuy.addEventListener('click', function() {
@@ -103,15 +114,17 @@ buttonBuy.addEventListener('click', function() {
         let preBuy = 0;
         buy.innerHTML = 0 + '원';
 
+        // 총구매액 계산
         for (let j = 0; j < ulBuy.children.length; j++) {
             buy.innerHTML = preBuy + parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000 + '원';
             preBuy += parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000;
         }
     }
+    // 돈이 그 이상 있어야 버튼이 작동한다.
+    // 돈이 그 이상 없으면 입금 알림이 뜬다.
+
+
     // 장바구니 비우기
     ulSelect.innerHTML = '';
 
-    // 총구매액 계산
 });
-    // 돈이 그 이상 있어야 버튼이 작동한다.
-    // 돈이 그 이상 없으면 입금 알림이 뜬다.
