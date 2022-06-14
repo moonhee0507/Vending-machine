@@ -3,9 +3,8 @@
 // 돈의 입금과 음료의 선택 시점은 자유롭지만 돈이 모자라면 음료가 나와서는 안된다.
 // 거스름돈이 나와야 한다.
 // 버튼을 누르면 상품이 1개씩 추가된다. (일반적인 자판기와 동일)
-
-
 // 입금액을 입력하고 입금 버튼을 클릭하면 잔액이 늘어난다.
+
 const inputDeposit = document.querySelector('#input-deposit'); // 입금액 입력칸
 const buttonDeposit = document.querySelector('#button-deposit'); // 입금버튼
 const divBalance = document.querySelector('.text-balance'); // 잔액 보이는 div
@@ -56,19 +55,25 @@ const arrProductsEn = ['Original_Cola', 'Violet_Cola', 'Yellow_Cola', 'Cool_Cola
 function makeList(i) {
     let buttonCount = 0;
     document.querySelectorAll('.button-product')[i].addEventListener('click', function() {
+        console.log(`처음 또는 계속 버튼누르자마자 버튼 카운트: ${buttonCount}`)
         buttonCount += 1;
         
         if (buttonCount == 1) {
             const basketedProduct = document.createElement('li');
             ulSelect.appendChild(basketedProduct);
+            basketedProduct.id = i; // id 적용
 
-            basketedProduct.innerHTML = `
+            document.getElementById(i).innerHTML = `
                 <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
                 ${arrProductsEn[i]}
                 <span class="quantity">${buttonCount}</span>
             `;
         } else {
-            document.querySelector('.quantity').innerHTML = `${buttonCount}`;
+            document.getElementById(i).innerHTML = `
+                <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
+                ${arrProductsEn[i]}
+                <span class="quantity">${buttonCount}</span>
+            `;
         }
     });
 }
