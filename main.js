@@ -16,62 +16,38 @@ const ulSelect = document.querySelector('#ul-select'); // 바구니1의 ul
 const buttonBuy = document.querySelector('#buy'); // 획득버튼
 const ulBuy = document.querySelector('#ul-buy'); // 바구니2의 ul
 
-// let preBalance = 0;
-// balance.innerHTML = 0 + '원';
+balance.innerHTML = 0 + '원';
 
 // 입금버튼을 누를 때 메서드
 buttonDeposit.addEventListener('click', HandleDepositButton)
-    
-    // if (inputDeposit.value <= 0) {
-    //     alert('입금액을 입력해주세요.');
-    // } else { // 입금액이 잔액에 그려진다.
-    //     let preBalance = 0;
-    //     balance.innerHTML = 0 + '원';
-    //     balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
-    //     preBalance += parseInt(inputDeposit.value)
-        
-    //     // 입금액 입력칸은 비어진다.
-    //     inputDeposit.value = '';
-    // }
-    
 
-// 입금 함수
+// 입금 버튼 핸들링 함수
 function HandleDepositButton() {
     if (inputDeposit.value <= 0) {
         alert('입금액을 입력해주세요.');
-    } else { // 입금액이 잔액에 그려진다.
-        // let preBalance = 0;
-        // balance.innerHTML = 0 + '원';
-        // balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
-        // preBalance += parseInt(inputDeposit.value)
-        
-        // // 입금액 입력칸은 비어진다.
-        // inputDeposit.value = '';
-
-        depositCalc()
-    }
-
-    // return balance;
-}
-
-function depositCalc() {
-    if (inputDeposit.value > 0) {
-        let preBalance = 0;
-        balance.innerHTML = 0 + '원';
-        balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
-        preBalance += parseInt(inputDeposit.value)
-        
+    } else {
+        // 잔액 계산 함수
+        balance.innerHTML = handleBalance() + '원';
         // 입금액 입력칸은 비어진다.
         inputDeposit.value = '';
     }
+}
 
-    return balance;
+// 입금 후 잔액 계산 함수(저장용)
+let preBalance = 0;
+function balanceCalcAfterDeposit() {
+    if (inputDeposit.value > 0) {
+        balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
+        preBalance += parseInt(inputDeposit.value)
+    }
+
+    let savedBalanceAfterDeposit = parseInt(balance.innerHTML);
+    return savedBalanceAfterDeposit;
 }
 
 // 거스름돈 반환 버튼을 클릭하면
 buttonReturn.addEventListener('click', function() {
-    
-    // 확인창이 뜬다.
+    // 확인창
     if (confirm('거스름돈을 받으시겠습니까?')) {
         alert(`반환되었습니다.`);
         balance.innerHTML = 0 + '원';
@@ -119,19 +95,14 @@ const 그린콜라 = new makeList(4);
 const 오렌지콜라 = new makeList(5);
 
 // 획득버튼 메서드
-buttonBuy.addEventListener('click', function() {
-    handleGetButton();
-    }
-);
+buttonBuy.addEventListener('click', handleGetButton);
 
 // 획득버튼 함수
 function handleGetButton() {
     if (parseInt(balance.innerHTML) == 0) {
-
-        alert('입금을 해주세요.')
+        alert('입금을 해주세요.');
 
     } else if (parseInt(balance.innerHTML) >= basketCalc()) {
-
         for (let i = 0; i < ulSelect.children.length; i++) {
             const boughtProduct = document.createElement('li');
             ulBuy.appendChild(boughtProduct);
@@ -151,30 +122,27 @@ function handleGetButton() {
             }
             
             // 잔액 계산
-            // balance.innerHTML = (원래있던 잔액 - 장바구니금액) + '원';
-            // balance.innerHTML = parseInt(balance.innerHTML)- basketCalc() + '원';
             balanceCalcAfterGet();
 
             // 장바구니 비우기
             ulSelect.innerHTML = '';
     
             // 총구매액 계산 함수
-            totalCalc()
+            totalCalc();
 
-            //버튼카운트 리셋
+            // TODO: 버튼카운트 리셋
 
     } else if (parseInt(balance.innerHTML) < basketCalc()) {
-        alert('입금을 더 해주세요.')
+        alert('잔액이 부족합니다.');
     }
 }
 
-// 획득 후 잔액 계산 함수
+// 획득 후 잔액 계산 함수(입금되어 있는 금액에서 구매액 차감)
 function balanceCalcAfterGet() {
-    // 획득버튼을 누른 후 잔액이 차감되는 기능
-    let preBalance = parseInt(depositCalc().innerHTML);
-    balance.innerHTML = preBalance - basketCalc() + '원';
+    let savedBalanceAfterGet = parseInt(balance.innerHTML) - basketCalc();
+    balance.innerHTML = savedBalanceAfterGet + '원';
 
-    console.log(preBalance)
+    return savedBalanceAfterGet;
 }
 
 // 장바구니액 계산 함수
@@ -185,6 +153,7 @@ function basketCalc() {
         basketTotal = preBasket + parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
         preBasket += parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000
     }
+    
     return basketTotal;
 }
 
@@ -198,4 +167,13 @@ function totalCalc() {
         buy.innerHTML = preBuy + parseInt(document.querySelectorAll('.buy-quantity')[i].innerHTML) * 1000 + '원';
         preBuy += parseInt(document.querySelectorAll('.buy-quantity')[i].innerHTML) * 1000;
     }
+
+    let totalBuy = buy.innerHTML;
+
+    return totalBuy;
+}
+
+// 잔액관리 함수
+function handleBalance() {
+    return parseInt(balanceCalcAfterDeposit()) - parseInt(totalCalc())
 }
