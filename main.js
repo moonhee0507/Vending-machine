@@ -16,22 +16,57 @@ const ulSelect = document.querySelector('#ul-select'); // 바구니1의 ul
 const buttonBuy = document.querySelector('#buy'); // 획득버튼
 const ulBuy = document.querySelector('#ul-buy'); // 바구니2의 ul
 
-let preBalance = 0;
-balance.innerHTML = 0 + '원';
+// let preBalance = 0;
+// balance.innerHTML = 0 + '원';
 
-buttonDeposit.addEventListener('click', function() {
+// 입금버튼을 누를 때 메서드
+buttonDeposit.addEventListener('click', HandleDepositButton)
     
+    // if (inputDeposit.value <= 0) {
+    //     alert('입금액을 입력해주세요.');
+    // } else { // 입금액이 잔액에 그려진다.
+    //     let preBalance = 0;
+    //     balance.innerHTML = 0 + '원';
+    //     balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
+    //     preBalance += parseInt(inputDeposit.value)
+        
+    //     // 입금액 입력칸은 비어진다.
+    //     inputDeposit.value = '';
+    // }
+    
+
+// 입금 함수
+function HandleDepositButton() {
     if (inputDeposit.value <= 0) {
         alert('입금액을 입력해주세요.');
-    } else {
+    } else { // 입금액이 잔액에 그려진다.
+        // let preBalance = 0;
+        // balance.innerHTML = 0 + '원';
+        // balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
+        // preBalance += parseInt(inputDeposit.value)
+        
+        // // 입금액 입력칸은 비어진다.
+        // inputDeposit.value = '';
+
+        depositCalc()
+    }
+
+    // return balance;
+}
+
+function depositCalc() {
+    if (inputDeposit.value > 0) {
+        let preBalance = 0;
+        balance.innerHTML = 0 + '원';
         balance.innerHTML = preBalance + parseInt(inputDeposit.value)+ '원';
         preBalance += parseInt(inputDeposit.value)
         
         // 입금액 입력칸은 비어진다.
         inputDeposit.value = '';
     }
-    
-});
+
+    return balance;
+}
 
 // 거스름돈 반환 버튼을 클릭하면
 buttonReturn.addEventListener('click', function() {
@@ -40,9 +75,7 @@ buttonReturn.addEventListener('click', function() {
     if (confirm('거스름돈을 받으시겠습니까?')) {
         alert(`반환되었습니다.`);
         balance.innerHTML = 0 + '원';
-        inputDeposit.value = '';
-        // TODO: 두 장바구니에서 상품이 모두 사라진다.
-        
+        inputDeposit.value = '';        
     }
 });
 
@@ -85,51 +118,84 @@ const 쿨콜라 = new makeList(3);
 const 그린콜라 = new makeList(4);
 const 오렌지콜라 = new makeList(5);
 
+// 획득버튼 메서드
+buttonBuy.addEventListener('click', function() {
+    handleGetButton();
+    }
+);
 
-// 장바구니에 담긴 상품가격 합계확인
-// 반복하고 basketedPrice와 잔액을 비교하는 함수...불리언...
-let preSelect = 0;
-for (let i = 0; i < ulSelect.children.length; i++) {
-    let basketedPrice = preSelect + parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
-    preSelect += parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
-    console.log(basketedPrice);
+// 획득버튼 함수
+function handleGetButton() {
+    if (parseInt(balance.innerHTML) == 0) {
+
+        alert('입금을 해주세요.')
+
+    } else if (parseInt(balance.innerHTML) >= basketCalc()) {
+
+        for (let i = 0; i < ulSelect.children.length; i++) {
+            const boughtProduct = document.createElement('li');
+            ulBuy.appendChild(boughtProduct);
+    
+            const boughtProductImg = document.createElement('img')
+            boughtProduct.appendChild(boughtProductImg);
+            boughtProductImg.src = ulSelect.children[i].children[0].src;
+            boughtProductImg.alt = ulSelect.children[i].children[0].alt;
+    
+            const boughtProductText = document.createTextNode(ulSelect.children[i].innerText.slice(0, -1))
+            boughtProduct.appendChild(boughtProductText);
+            
+            const boughtProductSpan = document.createElement('span')
+            boughtProduct.appendChild(boughtProductSpan);
+            boughtProductSpan.classList.add('buy-quantity');
+            boughtProductSpan.innerHTML = ulSelect.children[i].children[1].innerHTML;
+            }
+            
+            // 잔액 계산
+            // balance.innerHTML = (원래있던 잔액 - 장바구니금액) + '원';
+            // balance.innerHTML = parseInt(balance.innerHTML)- basketCalc() + '원';
+            balanceCalcAfterGet();
+
+            // 장바구니 비우기
+            ulSelect.innerHTML = '';
+    
+            // 총구매액 계산 함수
+            totalCalc()
+
+            //버튼카운트 리셋
+
+    } else if (parseInt(balance.innerHTML) < basketCalc()) {
+        alert('입금을 더 해주세요.')
+    }
 }
 
+// 획득 후 잔액 계산 함수
+function balanceCalcAfterGet() {
+    // 획득버튼을 누른 후 잔액이 차감되는 기능
+    let preBalance = parseInt(depositCalc().innerHTML);
+    balance.innerHTML = preBalance - basketCalc() + '원';
 
-// 획득버튼 이벤트
-buttonBuy.addEventListener('click', function() {
+    console.log(preBalance)
+}
+
+// 장바구니액 계산 함수
+function basketCalc() {
+    let basketTotal = 0;
+    let preBasket = 0;
     for (let i = 0; i < ulSelect.children.length; i++) {
-        const boughtProduct = document.createElement('li');
-        ulBuy.appendChild(boughtProduct);
-
-        const boughtProductImg = document.createElement('img')
-        boughtProduct.appendChild(boughtProductImg);
-        boughtProductImg.src = ulSelect.children[i].children[0].src;
-        boughtProductImg.alt = ulSelect.children[i].children[0].alt;
-
-        const boughtProductText = document.createTextNode(ulSelect.children[i].innerText.slice(0, -1))
-        boughtProduct.appendChild(boughtProductText);
-        
-        const boughtProductSpan = document.createElement('span')
-        boughtProduct.appendChild(boughtProductSpan);
-        boughtProductSpan.classList.add('buy-quantity');
-        boughtProductSpan.innerHTML = ulSelect.children[i].children[1].innerHTML;
-
-        let buy = document.querySelector('#content-buy');
-        let preBuy = 0;
-        buy.innerHTML = 0 + '원';
-
-        // 총구매액 계산
-        for (let j = 0; j < ulBuy.children.length; j++) {
-            buy.innerHTML = preBuy + parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000 + '원';
-            preBuy += parseInt(document.querySelectorAll('.buy-quantity')[j].innerHTML) * 1000;
-        }
+        basketTotal = preBasket + parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000;
+        preBasket += parseInt(document.querySelectorAll('.quantity')[i].innerHTML) * 1000
     }
-    // 돈이 그 이상 있어야 버튼이 작동한다.
-    // 돈이 그 이상 없으면 입금 알림이 뜬다.
+    return basketTotal;
+}
 
+// 총구매액 계산 함수
+function totalCalc() {
+    let buy = document.querySelector('#content-buy');
+    let preBuy = 0;
+    buy.innerHTML = 0 + '원';
 
-    // 장바구니 비우기
-    ulSelect.innerHTML = '';
-
-});
+    for (let i = 0; i < ulBuy.children.length; i++) {
+        buy.innerHTML = preBuy + parseInt(document.querySelectorAll('.buy-quantity')[i].innerHTML) * 1000 + '원';
+        preBuy += parseInt(document.querySelectorAll('.buy-quantity')[i].innerHTML) * 1000;
+    }
+}
