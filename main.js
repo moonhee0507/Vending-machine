@@ -61,38 +61,42 @@ const arrProducts = ['오리지널 콜라', '바이올렛 콜라', '옐로우 �
 
 const arrProductsEn = ['Original_Cola', 'Violet_Cola', 'Yellow_Cola', 'Cool_Cola', 'Green_Cola', 'Orange_Cola'];
 
-function makeList(i) {
+function handleMakeList(i) {
     let buttonCount = 0;
     document.querySelectorAll('.button-product')[i].addEventListener('click', function() {
-        console.log(`처음 또는 계속 버튼누르자마자 버튼 카운트: ${buttonCount}`)
+        console.log(`${i}상품의 클릭 직전 buttonCount: ${buttonCount}`)
         buttonCount += 1;
-        
-        if (buttonCount == 1) {
-            const basketedProduct = document.createElement('li');
-            ulSelect.appendChild(basketedProduct);
-            basketedProduct.id = i; // id 적용
 
-            document.getElementById(i).innerHTML = `
-                <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
-                ${arrProductsEn[i]}
-                <span class="quantity">${buttonCount}</span>
-            `;
-        } else {
+        let paintList = (i) => {
             document.getElementById(i).innerHTML = `
                 <img src="./images/${arrProductsEn[i]}.png" alt="${arrProducts[i]}" class="list-img">
                 ${arrProductsEn[i]}
                 <span class="quantity">${buttonCount}</span>
             `;
         }
+        
+        if (buttonCount == 1) {
+            const basketedProduct = document.createElement('li');
+            ulSelect.appendChild(basketedProduct);
+            basketedProduct.id = i; // id 적용
+            paintList(i);
+        } else {
+            paintList(i);
+        }
     });
 }
 
-const 오리지널콜라 = new makeList(0);
-const 바이올렛콜라 = new makeList(1);
-const 옐로우콜라 = new makeList(2);
-const 쿨콜라 = new makeList(3);
-const 그린콜라 = new makeList(4);
-const 오렌지콜라 = new makeList(5);
+// TODO: 획득 후 상품버튼 재카운트 함수
+// 왼쪽 바구니에는 새롭게 카운트함
+// 또 획득을 누르면 오른쪽 장바구니에 합산
+
+
+const 오리지널콜라 = new handleMakeList(0);
+const 바이올렛콜라 = new handleMakeList(1);
+const 옐로우콜라 = new handleMakeList(2);
+const 쿨콜라 = new handleMakeList(3);
+const 그린콜라 = new handleMakeList(4);
+const 오렌지콜라 = new handleMakeList(5);
 
 // 획득버튼 메서드
 buttonBuy.addEventListener('click', handleGetButton);
@@ -119,7 +123,7 @@ function handleGetButton() {
             boughtProduct.appendChild(boughtProductSpan);
             boughtProductSpan.classList.add('buy-quantity');
             boughtProductSpan.innerHTML = ulSelect.children[i].children[1].innerHTML;
-            }
+        }
             
             // 잔액 계산
             balanceCalcAfterGet();
@@ -131,6 +135,7 @@ function handleGetButton() {
             totalCalc();
 
             // TODO: 버튼카운트 리셋
+
 
     } else if (parseInt(balance.innerHTML) < basketCalc()) {
         alert('잔액이 부족합니다.');
